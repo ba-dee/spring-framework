@@ -925,19 +925,24 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		// Iterate over a copy to allow for init methods which in turn register new bean definitions.
 		// While this may not be part of the regular factory bootstrap, it does otherwise work fine.
 
-		//拿到 beanNames
+		//拿到所有的beanNames
 		List<String> beanNames = new ArrayList<>(this.beanDefinitionNames);
 
 		// Trigger initialization of all non-lazy singleton beans...
 		for (String beanName : beanNames) {
-			//合并 parent 自定义用自己的 最后用的 mergedBeanDefinitions
+			//合并beanDefinition 缓冲到mergedBeanDefinition
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
-			//1.抽象的bean定义， abstract=true, parent,beanDefinection的继承  2.3非懒加载的单例ean
+			//1.抽象的bean定义 abstract=true parent,合并beanDefinition的继承  2、3非懒加载的单例bean
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
 
+
+				//factoryBean
 				if (isFactoryBean(beanName)) {
+					//获取到的FactoryBean的bean
 					Object bean = getBean(FACTORY_BEAN_PREFIX + beanName);
 					if (bean instanceof FactoryBean) {
+
+						System.out.println("获取当前的bean:" + bean.getClass() + ":" +  bean);
 						FactoryBean<?> factory = (FactoryBean<?>) bean;
 						boolean isEagerInit;
 						if (System.getSecurityManager() != null && factory instanceof SmartFactoryBean) {
@@ -946,11 +951,15 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 									getAccessControlContext());
 						}
 						else {
+							//判断如果factroyBean继承了SmartFactoryBean 并且重写的 isEagerInit 为true
 							isEagerInit = (factory instanceof SmartFactoryBean &&
 									((SmartFactoryBean<?>) factory).isEagerInit());
 						}
 						if (isEagerInit) {
-							getBean(beanName);
+
+							//此处哪到的getObject的备案
+							Object bt = getBean(beanName);
+						    System.out.println("创建的bean为：" + bt);;
 						}
 					}
 				}
@@ -1038,7 +1047,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 				}
 			}
 
-			//注册到beanDefinectionMap中
+			//beanDefinitionMap
 			this.beanDefinitionMap.put(beanName, beanDefinition);
 		}
 		else {

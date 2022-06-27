@@ -125,6 +125,8 @@ class ComponentScanAnnotationParser {
 				return declaringClass.equals(className);
 			}
 		});
+
+		//通过调用扫描器进行扫描
 		return scanner.doScan(StringUtils.toStringArray(basePackages));
 	}
 

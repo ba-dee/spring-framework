@@ -310,11 +310,11 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 */
 	public Set<BeanDefinition> findCandidateComponents(String basePackage) {
 
-		//索引 项目中有很多类
-		//spring.components 文件 不扫描其他文件，该有的注解还要解析
+		//索引 配置了spring.components
 		if (this.componentsIndex != null && indexSupportsIncludeFilters()) {
 			return addCandidateComponentsFromIndex(this.componentsIndex, basePackage);
 		}
+		//一般情况下走else
 		else {
 			//核心
 			return scanCandidateComponents(basePackage);

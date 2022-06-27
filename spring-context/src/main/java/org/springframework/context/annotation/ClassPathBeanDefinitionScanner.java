@@ -276,23 +276,25 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 		Assert.notEmpty(basePackages, "At least one base package must be specified");
 		Set<BeanDefinitionHolder> beanDefinitions = new LinkedHashSet<>();
 		for (String basePackage : basePackages) {
-		    //核心逻辑
+		    //找到符合条件的beanDefinitionSet
 			Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
+
+			//遍历拿到的beanDefinitionSet
 			for (BeanDefinition candidate : candidates) {
-				//scope
+				//设置scope
 				ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(candidate);
 				candidate.setScope(scopeMetadata.getScopeName());
-				//beanName
+				//生成beanName
 				String beanName = this.beanNameGenerator.generateBeanName(candidate, this.registry);
 
 
 				if (candidate instanceof AbstractBeanDefinition) {
-                    //赋值默认值
+                    //赋值默认之
 					postProcessBeanDefinition((AbstractBeanDefinition) candidate, beanName);
 				}
 
 				if (candidate instanceof AnnotatedBeanDefinition) {
-					//@laby @primary @dependson @role @description
+					//添加 @laby @primary @DependsOn @role @description
 					AnnotationConfigUtils.processCommonDefinitionAnnotations((AnnotatedBeanDefinition) candidate);
 				}
 				//检查spring容器中是否已经存在该beanName
@@ -347,7 +349,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 	 * bean definition has been found for the specified name
 	 */
 	protected boolean checkCandidate(String beanName, BeanDefinition beanDefinition) throws IllegalStateException {
-		//正确
+		//没有返回true
 		if (!this.registry.containsBeanDefinition(beanName)) {
 			return true;
 		}

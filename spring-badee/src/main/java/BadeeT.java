@@ -22,5 +22,11 @@ public class BadeeT {
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
+		UserService userService = (UserService) context.getBean("userServiceFactoryBean");
+
+		System.out.println(context.getBean("&&&&&&userServiceFactoryBean"));
+		userService.name();
+
+
 	}
 }
