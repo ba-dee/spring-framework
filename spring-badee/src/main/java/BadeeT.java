@@ -9,7 +9,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
+import service.OrderService;
 import service.UserService;
+import service.UserServiceFactoryBean;
 
 import java.util.Locale;
 
@@ -21,12 +23,12 @@ public class BadeeT {
 		//2.创建非懒加载的单利bean
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+		context.close();
+		context.getBean("userService");
 
-		UserService userService = (UserService) context.getBean("userServiceFactoryBean");
 
-		System.out.println(context.getBean("&&&&&&userServiceFactoryBean"));
-		userService.name();
-
+//		System.out.println(context.getBean("&&&&&&userServiceFactoryBean"));
+//		userService.name();
 
 	}
 }

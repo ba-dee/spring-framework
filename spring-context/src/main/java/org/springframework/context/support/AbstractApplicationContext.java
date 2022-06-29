@@ -624,6 +624,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// Switch to active.
 		this.startupDate = System.currentTimeMillis();
 		this.closed.set(false);
+		//设置active 状态为true
 		this.active.set(true);
 
 		if (logger.isDebugEnabled()) {

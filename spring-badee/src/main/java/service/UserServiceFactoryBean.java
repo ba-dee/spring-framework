@@ -4,7 +4,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.SmartFactoryBean;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class UserServiceFactoryBean  implements FactoryBean<UserService>, SmartFactoryBean<UserService> {
 
 	@Override

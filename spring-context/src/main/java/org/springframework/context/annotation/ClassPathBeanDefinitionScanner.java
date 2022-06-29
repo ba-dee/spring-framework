@@ -289,7 +289,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 
 
 				if (candidate instanceof AbstractBeanDefinition) {
-                    //赋值默认之
+                    //赋值默认
 					postProcessBeanDefinition((AbstractBeanDefinition) candidate, beanName);
 				}
 
